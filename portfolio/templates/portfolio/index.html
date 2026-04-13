@@ -1,0 +1,459 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.name }} — Portfolio</title>
+    <meta name="description"
+        content="{{ profile.name }} — {{ profile.tagline }}. Full-stack developer portfolio showcasing projects, skills, and experience.">
+    <meta name="keywords" content="portfolio, developer, full-stack, {{ profile.name }}, AI, cybersecurity">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'portfolio/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'portfolio/css/chatbot.css' %}">
+</head>
+
+<body data-theme="dark">
+
+    <!-- ═══════ LOADING SCREEN ═══════ -->
+    <div id="loading" aria-hidden="true">
+        <div class="loader-wrapper">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <span class="loader-text">AM</span>
+        </div>
+    </div>
+
+    <!-- ═══════ SCROLL PROGRESS BAR ═══════ -->
+    <div class="scroll-progress" id="scrollIndicator"></div>
+
+    <!-- ═══════ PARTICLE CANVAS ═══════ -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ═══════ NAVIGATION ═══════ -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="nav-logo">
+            <span class="logo-bracket">&lt;</span>AM<span class="logo-bracket">/&gt;</span>
+        </a>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#hero" class="nav-link active" data-section="hero">Home</a></li>
+            <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+            <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+            <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+            <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+            <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══════ HERO SECTION ═══════ -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge animate-fade-in">
+                <i class="fa-solid fa-rocket"></i> Available for opportunities
+            </div>
+            <h1 class="hero-title animate-fade-in" style="animation-delay: 0.2s">
+                Hi, I'm <span class="gradient-text">{{ profile.name }}</span>
+            </h1>
+            <div class="hero-typing-wrapper animate-fade-in" style="animation-delay: 0.4s">
+                <span class="hero-typing-prefix">I'm a&nbsp;</span>
+                <span class="typing-text" id="typing-text"></span>
+                <span class="typing-cursor">|</span>
+            </div>
+            <p class="hero-description animate-fade-in" style="animation-delay: 0.6s">
+                {{ profile.summary|truncatewords:30 }}
+            </p>
+            <div class="hero-cta animate-fade-in" style="animation-delay: 0.8s">
+                <a href="#contact" class="btn btn-primary" id="hero-hire-btn">
+                    <i class="fa-solid fa-paper-plane"></i> Hire Me
+                </a>
+                <a href="#projects" class="btn btn-outline" id="hero-projects-btn">
+                    <i class="fa-solid fa-code"></i> View Projects
+                </a>
+            </div>
+            <div class="hero-socials animate-fade-in" style="animation-delay: 1.0s">
+                <a href="{{ profile.github }}" target="_blank" class="social-link" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="{{ profile.linkedin }}" target="_blank" class="social-link" title="LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="mailto:{{ profile.email }}" class="social-link" title="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual animate-fade-in" style="animation-delay: 0.5s">
+            <div class="hero-code-block">
+                <div class="code-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-filename">developer.py</span>
+                </div>
+                <pre class="code-content"><code><span class="code-keyword">class</span> <span class="code-class">Developer</span>:
+    <span class="code-keyword">def</span> <span class="code-func">__init__</span>(self):
+        self.<span class="code-attr">name</span> = <span class="code-string">"{{ profile.name }}"</span>
+        self.<span class="code-attr">role</span> = <span class="code-string">"Full Stack Dev"</span>
+        self.<span class="code-attr">skills</span> = [<span class="code-string">"Python"</span>, <span class="code-string">"Django"</span>,
+                     <span class="code-string">"JS"</span>, <span class="code-string">"Java"</span>]
+
+    <span class="code-keyword">def</span> <span class="code-func">say_hello</span>(self):
+        <span class="code-keyword">return</span> <span class="code-string">"Let's build! 🚀"</span></code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ ABOUT SECTION ═══════ -->
+    <section class="section" id="about">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-user"></i> Who I Am</span>
+                <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-info glass-card">
+                    <h3><i class="fa-solid fa-quote-left accent-icon"></i> Bio</h3>
+                    <p>{{ profile.summary }}</p>
+                </div>
+                <div class="about-info glass-card">
+                    <h3><i class="fa-solid fa-graduation-cap accent-icon"></i> Education</h3>
+                    {% for edu in education %}
+                    <div class="about-edu-item">
+                        <strong>{{ edu.degree }}</strong>
+                        <p>{{ edu.institution }}</p>
+                        <span class="badge">{{ edu.date_range }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="about-info glass-card full-width">
+                    <h3><i class="fa-solid fa-bullseye accent-icon"></i> Career Vision</h3>
+                    <p>{{ profile.career_vision }}</p>
+                </div>
+            </div>
+
+            <!-- About Stats -->
+            <div class="about-stats">
+                <div class="stat-item glass-card">
+                    <span class="stat-number" data-count="6">0</span>
+                    <span class="stat-label">Projects Built</span>
+                </div>
+                <div class="stat-item glass-card">
+                    <span class="stat-number" data-count="5">0</span>
+                    <span class="stat-label">Certifications</span>
+                </div>
+                <div class="stat-item glass-card">
+                    <span class="stat-number" data-count="15">0</span>
+                    <span class="stat-label">Technologies</span>
+                </div>
+                <div class="stat-item glass-card">
+                    <span class="stat-number" data-count="4">0</span>
+                    <span class="stat-label">Achievements</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ SKILLS SECTION ═══════ -->
+    <section class="section" id="skills">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> What I Know</span>
+                <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+            </div>
+            <div class="skills-grid">
+                <!-- Frontend -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon frontend-icon"><i class="fa-solid fa-palette"></i></div>
+                        <h3>Frontend</h3>
+                    </div>
+                    <div class="skill-list">
+                        {% for skill in frontend_skills %}
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <i class="{{ skill.icon_class }} skill-icon"></i>
+                                <span>{{ skill.name }}</span>
+                                <span class="skill-percent">{{ skill.proficiency_percent }}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill frontend-fill" data-width="{{ skill.proficiency_percent }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Backend -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon backend-icon"><i class="fa-solid fa-server"></i></div>
+                        <h3>Backend</h3>
+                    </div>
+                    <div class="skill-list">
+                        {% for skill in backend_skills %}
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <i class="{{ skill.icon_class }} skill-icon"></i>
+                                <span>{{ skill.name }}</span>
+                                <span class="skill-percent">{{ skill.proficiency_percent }}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill backend-fill" data-width="{{ skill.proficiency_percent }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Database -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon database-icon"><i class="fa-solid fa-database"></i></div>
+                        <h3>Database</h3>
+                    </div>
+                    <div class="skill-list">
+                        {% for skill in database_skills %}
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <i class="{{ skill.icon_class }} skill-icon"></i>
+                                <span>{{ skill.name }}</span>
+                                <span class="skill-percent">{{ skill.proficiency_percent }}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill database-fill" data-width="{{ skill.proficiency_percent }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Tools -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="skill-cat-icon tools-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                        <h3>Tools</h3>
+                    </div>
+                    <div class="skill-list">
+                        {% for skill in tools_skills %}
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <i class="{{ skill.icon_class }} skill-icon"></i>
+                                <span>{{ skill.name }}</span>
+                                <span class="skill-percent">{{ skill.proficiency_percent }}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill tools-fill" data-width="{{ skill.proficiency_percent }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ PROJECTS SECTION ═══════ -->
+    <section class="section" id="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-diagram-project"></i> What I've Built</span>
+                <h2 class="section-title">My <span class="gradient-text">Projects</span></h2>
+            </div>
+            <div class="projects-grid" id="projects-container">
+                <!-- Loaded dynamically from API -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ EXPERIENCE / ACHIEVEMENTS SECTION ═══════ -->
+    <section class="section" id="experience">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-medal"></i> My Journey</span>
+                <h2 class="section-title">Experience & <span class="gradient-text">Achievements</span></h2>
+            </div>
+
+            <div class="experience-grid">
+                <!-- Timeline: Achievements -->
+                <div class="timeline-column">
+                    <h3 class="timeline-title"><i class="fa-solid fa-trophy"></i> Achievements</h3>
+                    <div class="timeline-track">
+                        {% for ach in achievements %}
+                        <div class="timeline-node glass-card">
+                            <div class="timeline-dot-outer">
+                                <div class="timeline-dot-inner"></div>
+                            </div>
+                            <div class="timeline-node-content">
+                                <span class="timeline-date">{{ ach.date }}</span>
+                                <h4><i class="{{ ach.icon_class }}"></i> {{ ach.title }}</h4>
+                                <p>{{ ach.description }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Timeline: Certifications -->
+                <div class="timeline-column">
+                    <h3 class="timeline-title"><i class="fa-solid fa-certificate"></i> Certifications</h3>
+                    <div class="timeline-track">
+                        {% for cert in certifications %}
+                        <div class="timeline-node glass-card">
+                            <div class="timeline-dot-outer">
+                                <div class="timeline-dot-inner"></div>
+                            </div>
+                            <div class="timeline-node-content">
+                                <span class="timeline-date">{{ cert.date }}</span>
+                                <h4>{{ cert.title }}</h4>
+                                <p>{{ cert.issuer }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ CONTACT SECTION ═══════ -->
+    <section class="section" id="contact">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-comments"></i> Get In Touch</span>
+                <h2 class="section-title">Contact <span class="gradient-text">Me</span></h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info-cards">
+                    <div class="contact-card glass-card">
+                        <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <h4>Email</h4>
+                        <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
+                    </div>
+                    <div class="contact-card glass-card">
+                        <div class="contact-card-icon"><i class="fa-solid fa-phone"></i></div>
+                        <h4>Phone</h4>
+                        <a href="tel:{{ profile.phone }}">{{ profile.phone }}</a>
+                    </div>
+                    <div class="contact-card glass-card">
+                        <div class="contact-card-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <h4>Location</h4>
+                        <p>{{ profile.location }}</p>
+                    </div>
+                </div>
+                <form class="contact-form glass-card" id="contact-form">
+                    <h3>Send me a message</h3>
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required autocomplete="name">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Your Email" required autocomplete="email">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+                        <label for="message">Message</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="contact-submit-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                    </button>
+                    <p class="form-status" id="form-status"></p>
+                </form>
+            </div>
+
+            <!-- Resume Download -->
+            <div class="resume-section">
+                <a href="https://drive.google.com/file/d/1k_03HIBcUBGOIYl-SKCrO62jUejYvfYK/view?usp=sharing"
+                    class="btn btn-primary btn-lg" id="download-resume-btn">
+                    <i class="fa-solid fa-download"></i> Download Resume (PDF)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-bracket">&lt;</span>AM<span class="logo-bracket">/&gt;</span>
+            </div>
+            <p>Designed & Built with <i class="fa-solid fa-heart" style="color: #ef4444;"></i> by {{ profile.name }}</p>
+            <div class="footer-socials">
+                <a href="{{ profile.github }}" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="{{ profile.linkedin }}" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:{{ profile.email }}"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <p class="footer-copyright">&copy; 2025 {{ profile.name }}. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ═══════ CHATBOT ═══════ -->
+    <div class="chatbot-btn" id="chatbot-button" title="Chat with AI Assistant">
+        <i class="fa-solid fa-robot"></i>
+        <span class="chatbot-btn-text">AI Chat</span>
+        <span class="chatbot-pulse"></span>
+    </div>
+
+    <div class="chatbot-window hidden" id="chatbot-window">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar"><i class="fa-solid fa-robot"></i></div>
+                <div>
+                    <h4>Aditya's AI Assistant</h4>
+                    <span class="chat-status"><span class="status-dot"></span> Online</span>
+                </div>
+            </div>
+            <button id="close-chat" title="Close chat"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="chat-message bot">
+                <div class="chat-msg-content">
+                    👋 Hello! I'm Aditya's AI assistant. Ask me about his <strong>skills</strong>,
+                    <strong>projects</strong>, <strong>experience</strong>, or how to <strong>contact</strong> him!
+                </div>
+            </div>
+        </div>
+        <div class="chat-suggestions">
+            <button class="suggestion-btn" data-text="Show Projects"><i class="fa-solid fa-code"></i> Projects</button>
+            <button class="suggestion-btn" data-text="What are your skills?"><i
+                    class="fa-solid fa-wand-magic-sparkles"></i> Skills</button>
+            <button class="suggestion-btn" data-text="Contact info"><i class="fa-solid fa-envelope"></i>
+                Contact</button>
+            <button class="suggestion-btn" data-text="Download resume"><i class="fa-solid fa-file"></i> Resume</button>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+            <button id="send-btn" title="Send message"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- ═══════ SCRIPTS ═══════ -->
+    <script src="{% static 'portfolio/js/script.js' %}"></script>
+    <script src="{% static 'portfolio/js/chatbot.js' %}"></script>
+</body>
+
+</html>
