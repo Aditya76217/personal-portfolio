@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-wwzx(xy&kyp@b(p3550iag!bux6$-knktu#-ck#q%7*q9x$m6a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [https://personal-portfolio-kappa-three-10.vercel.app]
+ALLOWED_HOSTS = [
+    "personal-portfolio-kappa-three-10.vercel.app",
+    "localhost",
+    "127.0.0.1"
+]
 
 
 # Application definition
